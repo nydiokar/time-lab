@@ -156,15 +156,15 @@
 
         # Packages (for future Rust/Python tools)
         packages = {
-          # Example: rust_extractor
-          # rust_extractor = pkgs.rustPlatform.buildRustPackage {
-          #   pname = "rust_extractor";
-          #   version = "0.1.0";
-          #   src = ./tools/rust_extractor;
-          #   cargoLock = {
-          #     lockFile = ./tools/rust_extractor/Cargo.lock;
-          #   };
-          # };
+          # Rust extractor tool
+          rust_extractor = pkgs.rustPlatform.buildRustPackage {
+            pname = "rust_extractor";
+            version = "0.1.0";
+            src = ./tools/rust_extractor;
+            cargoLock = {
+              lockFile = ./tools/rust_extractor/Cargo.lock;
+            };
+          };
         };
 
         # Apps (for nix run .#app-name)
