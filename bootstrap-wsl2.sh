@@ -126,15 +126,22 @@ echo "🧪 Testing Nix installation..."
 nix --version
 nix flake show nixpkgs 2>/dev/null || echo "Note: Test flake command completed"
 
-# If we're in the time-lab directory, set up Node.js and Claude CLI
+# If we're in the time-lab directory, set up Claude CLI in user space
 if [ -f "flake.nix" ]; then
     echo ""
-    echo "📦 Setting up Node.js and Claude CLI..."
+    echo "📦 Setting up Claude CLI..."
     
-    # Enter nix shell and install Claude globally
-    nix develop --command bash -c "npm install -g @anthropic-ai/claude-code" || echo "Note: Claude CLI will be available after entering nix develop"
+    # Install to user's local directory (not Nix store)
+    nix develop --command bash -c "npm install -g --prefix ~/.local @anthropic-ai/claude-code" || echo "Note: Will install Claude CLI to ~/.local"
     
-    echo "✅ Claude CLI installed"
+    # Add ~/.local/bin to PATH if not already there
+    if [ -f ~/.bashrc ] && ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc; then
+        echo '' >> ~/.bashrc
+        echo '# User-local binaries' >> ~/.bashrc
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+    fi
+    
+    echo "✅ Claude CLI installed to ~/.local/bin"
 fi
 
 echo ""
