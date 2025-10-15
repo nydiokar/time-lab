@@ -1,0 +1,78 @@
+# Time-Lab .gitignore
+
+# Nix
+result
+result-*
+.direnv/
+.envrc.cache
+
+# Secrets
+secrets/
+.env
+.env.lab
+.env.local
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+env/
+ENV/
+.venv
+
+# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+.cache/
+
+# Node (if used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Project-specific artifacts (keep versioned)
+# YYYY/ directories are tracked for reproducibility
+# But exclude large binary artifacts if needed:
+# **/*.bin
+# **/*.model
+

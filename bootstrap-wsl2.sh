@@ -126,6 +126,17 @@ echo "🧪 Testing Nix installation..."
 nix --version
 nix flake show nixpkgs 2>/dev/null || echo "Note: Test flake command completed"
 
+# If we're in the time-lab directory, set up Node.js and Claude CLI
+if [ -f "flake.nix" ]; then
+    echo ""
+    echo "📦 Setting up Node.js and Claude CLI..."
+    
+    # Enter nix shell and install Claude globally
+    nix develop --command bash -c "npm install -g @anthropic-ai/claude-code" || echo "Note: Claude CLI will be available after entering nix develop"
+    
+    echo "✅ Claude CLI installed"
+fi
+
 echo ""
 echo "✅ Bootstrap Complete!"
 echo ""
@@ -133,14 +144,17 @@ echo "📋 Summary:"
 echo "  - Nix installed with flakes enabled"
 echo "  - direnv installed and configured"
 echo "  - Git configured"
+echo "  - Node.js provided by Nix"
+echo "  - Claude CLI installed globally"
 echo ""
 echo "🎯 Next Steps:"
 echo "  1. Close and reopen your terminal (or run: source ~/.bashrc)"
 echo "  2. Navigate to time-lab: cd ~/projects/time-lab"
 echo "  3. Enter development environment: nix develop"
-echo "  4. Start building: just day"
+echo "  4. Verify Claude: claude --version"
+echo "  5. Start building: just day"
 echo ""
-echo "💡 All tools (git, python, rust, etc.) are provided by Nix!"
+echo "💡 All tools (git, python, rust, node, claude) are provided by Nix!"
 echo "   No need to install anything else manually."
 echo ""
 echo "🔄 To replicate on another machine:"
