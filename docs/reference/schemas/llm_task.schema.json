@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://time-lab.dev/schemas/llm_task.schema.json",
+  "title": "LLM Task Specification",
+  "description": "Schema for Large Language Model inference tasks",
+  "allOf": [
+    {
+      "$ref": "spec.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "llm"
+        },
+        "inputs": {
+          "type": "object",
+          "required": ["prompt"],
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "description": "The prompt to send to the LLM",
+              "minLength": 1,
+              "examples": ["Explain quantum computing in simple terms"]
+            },
+            "system": {
+              "type": "string",
+              "description": "System message (if supported by model)",
+              "examples": ["You are a helpful physics tutor"]
+            },
+            "context": {
+              "type": "array",
+              "description": "Previous messages for multi-turn conversation",
+              "items": {
+                "type": "object",
+                "required": ["role", "content"],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": ["user", "assistant", "system"]
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "files": {
+              "type": "array",
+              "description": "Input files to include in context",
+              "items": {
+                "type": "string"
+              },
+              "examples": [["data/research_paper.pdf", "notes/background.md"]]
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "description": "Model identifier to use",
+              "examples": ["ollama:qwen2.5:7b", "openai:gpt-4", "anthropic:claude-3-opus"]
+            },
+            "temperature": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 2.0,
+              "default": 0.7,
+              "description": "Sampling temperature (higher = more random)"
+            },
+            "top_p": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "default": 0.95,
+              "description": "Nucleus sampling threshold"
+            },
+            "seed": {
+              "type": ["integer", "null"],
+              "description": "Random seed for reproducibility (if supported)",
+              "examples": [42, null]
+            },
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 2048,
+              "description": "Maximum output tokens"
+            },
+            "stop": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Sequences that stop generation",
+              "examples": [["END", "###"]]
+            },
+            "stream": {
+              "type": "boolean",
+              "default": false,
+              "description": "Whether to stream responses"
+            },
+            "format": {
+              "type": "string",
+              "enum": ["text", "json", "markdown"],
+              "default": "text",
+              "description": "Expected output format"
+            }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "description": "Output validation rules",
+          "properties": {
+            "min_length": {
+              "type": "integer",
+              "description": "Minimum output length in characters"
+            },
+            "max_length": {
+              "type": "integer",
+              "description": "Maximum output length in characters"
+            },
+            "must_contain": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Strings that must appear in output"
+            },
+            "must_not_contain": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Strings that must not appear in output"
+            },
+            "json_schema": {
+              "type": "object",
+              "description": "JSON schema for structured output validation"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "kind": "llm",
+      "version": "1.0",
+      "name": "Quantum Computing Explanation",
+      "description": "Generate beginner-friendly explanation with examples",
+      "tags": ["quantum", "education", "physics"],
+      "inputs": {
+        "prompt": "Explain quantum computing in simple terms, with 2-3 real-world analogies",
+        "system": "You are a physics educator who excels at making complex topics accessible"
+      },
+      "config": {
+        "model": "ollama:qwen2.5:7b",
+        "temperature": 0.7,
+        "top_p": 0.95,
+        "seed": 42,
+        "max_tokens": 1000,
+        "format": "markdown"
+      },
+      "validation": {
+        "min_length": 200,
+        "must_contain": ["qubit", "superposition"],
+        "must_not_contain": ["complex math", "advanced calculus"]
+      },
+      "metadata": {
+        "author": "researcher@example.com",
+        "created_at": "2025-10-15T10:00:00Z",
+        "project": "quantum-education-2025"
+      }
+    },
+    {
+      "kind": "llm",
+      "version": "1.0",
+      "name": "Code Review Assistant",
+      "inputs": {
+        "prompt": "Review this Rust function for bugs and style issues",
+        "files": ["src/parser.rs"],
+        "context": [
+          {
+            "role": "system",
+            "content": "You are an expert Rust developer"
+          }
+        ]
+      },
+      "config": {
+        "model": "openai:gpt-4",
+        "temperature": 0.3,
+        "max_tokens": 2000,
+        "format": "markdown"
+      }
+    }
+  ]
+}
+

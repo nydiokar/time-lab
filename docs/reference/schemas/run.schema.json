@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://time-lab.dev/schemas/run.schema.json",
+  "title": "Run Manifest",
+  "description": "Schema for execution run manifests documenting provenance and outputs",
+  "type": "object",
+  "required": [
+    "run_id",
+    "timestamp_start",
+    "cmd",
+    "git_sha",
+    "flake_lock_sha256",
+    "status"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Deterministic SHA-256 hash of run parameters",
+      "pattern": "^[a-f0-9]{64}$",
+      "examples": ["a3f5b2c1d4e6f789012345678901234567890123456789012345678901234567"]
+    },
+    "timestamp_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when run started (ISO 8601)",
+      "examples": ["2025-10-15T14:30:00Z"]
+    },
+    "timestamp_end": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "UTC timestamp when run ended (null if still running)",
+      "examples": ["2025-10-15T14:30:45Z", null]
+    },
+    "cmd": {
+      "type": "string",
+      "description": "Command that was executed",
+      "examples": ["./scripts/run_llm_task.sh 2025/10/15/ai-team/specs/demo.json"]
+    },
+    "git_sha": {
+      "type": "string",
+      "description": "Git commit SHA of the code that ran",
+      "pattern": "^[a-f0-9]{7,40}$",
+      "examples": ["abcd123", "abcd1234567890abcdef1234567890abcdef1234"]
+    },
+    "flake_lock_sha256": {
+      "type": "string",
+      "description": "SHA-256 hash of flake.lock file",
+      "pattern": "^[a-f0-9]{64}$",
+      "examples": ["efgh4567890123456789012345678901234567890123456789012345678901234"]
+    },
+    "env": {
+      "type": "object",
+      "description": "Environment information",
+      "properties": {
+        "system": {
+          "type": "string",
+          "description": "Operating system and architecture",
+          "examples": ["Linux-x86_64", "Darwin-aarch64"]
+        },
+        "nix_version": {
+          "type": "string",
+          "description": "Nix version used",
+          "examples": ["nix (Nix) 2.18.1"]
+        },
+        "apps": {
+          "type": "array",
+          "description": "List of applications/tools with versions",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["llm-task@1.0.0", "rust_extractor@0.1.0"]]
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "description": "Task-specific metadata",
+      "required": ["kind", "spec_path"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "Type of task",
+          "enum": ["llm", "analysis", "extraction", "mining"],
+          "examples": ["llm"]
+        },
+        "spec_path": {
+          "type": "string",
+          "description": "Path to input specification file",
+          "examples": ["2025/10/15/ai-team/specs/demo.json"]
+        },
+        "spec_hash": {
+          "type": "string",
+          "description": "SHA-256 hash of spec file",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "description": "Model configuration (for LLM tasks)",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Model identifier",
+          "examples": ["ollama:qwen2.5:7b", "openai:gpt-4", "anthropic:claude-3-opus"]
+        },
+        "hash": {
+          "type": "string",
+          "description": "Model file hash or version identifier",
+          "examples": ["sha256-abc123...", "gpt-4-0613"]
+        },
+        "params": {
+          "type": "object",
+          "description": "Model parameters used for this run",
+          "properties": {
+            "temperature": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 2.0,
+              "description": "Sampling temperature"
+            },
+            "top_p": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Nucleus sampling threshold"
+            },
+            "seed": {
+              "type": ["integer", "null"],
+              "description": "Random seed (if supported by model)"
+            },
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Maximum output tokens"
+            },
+            "stop": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Stop sequences"
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Execution status",
+      "enum": ["running", "ok", "error", "cancelled"],
+      "examples": ["ok"]
+    },
+    "error": {
+      "type": "object",
+      "description": "Error information (if status is 'error')",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Error message"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Exit code"
+        },
+        "stack": {
+          "type": "string",
+          "description": "Stack trace (if available)"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "List of output artifact paths (relative to run manifest)",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["input.spec.json", "output.jsonl", "log.txt"]
+      ]
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Optional performance metrics",
+      "properties": {
+        "duration_seconds": {
+          "type": "number",
+          "description": "Total execution time in seconds"
+        },
+        "tokens_input": {
+          "type": "integer",
+          "description": "Input tokens (for LLM tasks)"
+        },
+        "tokens_output": {
+          "type": "integer",
+          "description": "Output tokens (for LLM tasks)"
+        },
+        "cost_usd": {
+          "type": "number",
+          "description": "Estimated cost in USD (for API calls)"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "run_id": "a3f5b2c1d4e6f789012345678901234567890123456789012345678901234567",
+      "timestamp_start": "2025-10-15T14:30:00Z",
+      "timestamp_end": "2025-10-15T14:30:45Z",
+      "cmd": "./scripts/run_llm_task.sh 2025/10/15/ai-team/specs/demo.json",
+      "git_sha": "abcd123",
+      "flake_lock_sha256": "efgh4567890123456789012345678901234567890123456789012345678901234",
+      "env": {
+        "system": "Linux-x86_64",
+        "nix_version": "nix (Nix) 2.18.1",
+        "apps": ["llm-task@1.0.0"]
+      },
+      "task": {
+        "kind": "llm",
+        "spec_path": "2025/10/15/ai-team/specs/demo.json",
+        "spec_hash": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+      },
+      "model": {
+        "name": "ollama:qwen2.5:7b",
+        "hash": "sha256-model123",
+        "params": {
+          "temperature": 0.7,
+          "top_p": 0.95,
+          "seed": 42,
+          "max_tokens": 2048
+        }
+      },
+      "status": "ok",
+      "artifacts": ["output.jsonl", "log.txt"],
+      "metrics": {
+        "duration_seconds": 45.3,
+        "tokens_input": 125,
+        "tokens_output": 850
+      }
+    }
+  ]
+}
+

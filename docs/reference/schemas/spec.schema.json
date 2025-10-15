@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://time-lab.dev/schemas/spec.schema.json",
+  "title": "Task Specification",
+  "description": "Base schema for task input specifications",
+  "type": "object",
+  "required": ["kind", "version"],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "description": "Type of task to execute",
+      "enum": ["llm", "analysis", "extraction", "mining"],
+      "examples": ["llm"]
+    },
+    "version": {
+      "type": "string",
+      "description": "Spec schema version (semver)",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
+      "examples": ["1.0", "1.0.0"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable task name",
+      "examples": ["Quantum Computing Explanation", "Analyze React Commits"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what this task does",
+      "examples": ["Generate a beginner-friendly explanation of quantum computing concepts"]
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags for categorization and search",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["quantum", "physics", "education"]]
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Task-specific input data (schema varies by kind)"
+    },
+    "config": {
+      "type": "object",
+      "description": "Task-specific configuration (schema varies by kind)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata for tracking",
+      "properties": {
+        "author": {
+          "type": "string",
+          "description": "Who created this spec"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this spec was created"
+        },
+        "project": {
+          "type": "string",
+          "description": "Project or experiment this belongs to"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "kind": "llm",
+      "version": "1.0",
+      "name": "Explain Quantum Computing",
+      "description": "Generate a clear explanation of quantum computing for beginners",
+      "tags": ["quantum", "education"],
+      "inputs": {
+        "prompt": "Explain quantum computing in simple terms"
+      },
+      "config": {
+        "temperature": 0.7,
+        "max_tokens": 500
+      },
+      "metadata": {
+        "author": "researcher@example.com",
+        "created_at": "2025-10-15T10:00:00Z",
+        "project": "quantum-education"
+      }
+    }
+  ]
+}
+

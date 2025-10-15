@@ -1,0 +1,254 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://time-lab.dev/schemas/mining_task.schema.json",
+  "title": "Git Mining Task Specification",
+  "description": "Schema for git commit mining and analysis tasks",
+  "allOf": [
+    {
+      "$ref": "spec.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "mining"
+        },
+        "inputs": {
+          "type": "object",
+          "required": ["repository"],
+          "properties": {
+            "repository": {
+              "type": "object",
+              "required": ["owner", "name"],
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "description": "GitHub repository owner/org",
+                  "examples": ["facebook", "rust-lang"]
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Repository name",
+                  "examples": ["react", "rust"]
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Full repository URL (optional)",
+                  "examples": ["https://github.com/facebook/react"]
+                }
+              }
+            },
+            "filter": {
+              "type": "object",
+              "description": "Commit filtering criteria",
+              "properties": {
+                "since": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start date (ISO 8601)",
+                  "examples": ["2025-01-01T00:00:00Z"]
+                },
+                "until": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "End date (ISO 8601)"
+                },
+                "author": {
+                  "type": "string",
+                  "description": "Filter by author email/name"
+                },
+                "branch": {
+                  "type": "string",
+                  "description": "Branch to analyze",
+                  "default": "main",
+                  "examples": ["main", "develop", "release/v2.0"]
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Filter commits touching specific path",
+                  "examples": ["src/", "docs/"]
+                },
+                "message_pattern": {
+                  "type": "string",
+                  "description": "Regex pattern for commit messages",
+                  "examples": ["^feat:", "fix\\(.*\\):"]
+                }
+              }
+            },
+            "commits": {
+              "type": "array",
+              "description": "Specific commit SHAs to analyze (instead of filtering)",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{7,40}$"
+              },
+              "examples": [["abc123d", "def456e", "789abc0"]]
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10,
+              "description": "Maximum number of commits to analyze"
+            },
+            "fetch_mode": {
+              "type": "string",
+              "enum": ["full", "shallow", "diff-only"],
+              "default": "diff-only",
+              "description": "How much data to fetch"
+            },
+            "include_stats": {
+              "type": "boolean",
+              "default": true,
+              "description": "Include diff statistics"
+            },
+            "include_full_diff": {
+              "type": "boolean",
+              "default": false,
+              "description": "Include complete diff (can be large)"
+            },
+            "analyze": {
+              "type": "object",
+              "description": "Analysis to perform on each commit",
+              "properties": {
+                "generate_summary": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Generate analysis_summary.md"
+                },
+                "extract_patterns": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Extract code patterns"
+                },
+                "llm_analysis": {
+                  "type": "object",
+                  "description": "Use LLM for commit analysis",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "model": {
+                      "type": "string",
+                      "examples": ["ollama:qwen2.5:7b"]
+                    },
+                    "prompt_template": {
+                      "type": "string",
+                      "description": "Template for LLM prompt",
+                      "examples": ["Analyze this commit and extract key insights: {diff}"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "output": {
+          "type": "object",
+          "description": "Output format configuration",
+          "properties": {
+            "format": {
+              "type": "string",
+              "enum": ["folders", "json", "csv"],
+              "default": "folders",
+              "description": "How to structure outputs"
+            },
+            "per_commit_files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "commit_message.txt",
+                  "diff_stats.txt",
+                  "full_diff.txt",
+                  "analysis_summary.md",
+                  "metadata.json"
+                ]
+              },
+              "default": ["commit_message.txt", "diff_stats.txt", "analysis_summary.md"],
+              "description": "Which files to create per commit"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "kind": "mining",
+      "version": "1.0",
+      "name": "Analyze React Recent Commits",
+      "description": "Mine last 20 commits from React repo for pattern analysis",
+      "tags": ["react", "frontend", "patterns"],
+      "inputs": {
+        "repository": {
+          "owner": "facebook",
+          "name": "react"
+        },
+        "filter": {
+          "since": "2025-10-01T00:00:00Z",
+          "branch": "main",
+          "path": "packages/"
+        }
+      },
+      "config": {
+        "limit": 20,
+        "fetch_mode": "diff-only",
+        "include_stats": true,
+        "include_full_diff": false,
+        "analyze": {
+          "generate_summary": true,
+          "extract_patterns": true,
+          "llm_analysis": {
+            "enabled": true,
+            "model": "ollama:qwen2.5:7b",
+            "prompt_template": "Analyze this React commit. Focus on: 1) Type of change 2) Impact on API 3) Testing approach. Diff: {diff}"
+          }
+        }
+      },
+      "output": {
+        "format": "folders",
+        "per_commit_files": [
+          "commit_message.txt",
+          "diff_stats.txt",
+          "analysis_summary.md",
+          "metadata.json"
+        ]
+      },
+      "metadata": {
+        "author": "researcher@example.com",
+        "created_at": "2025-10-15T11:00:00Z",
+        "project": "react-patterns-study"
+      }
+    },
+    {
+      "kind": "mining",
+      "version": "1.0",
+      "name": "Analyze Specific Bug Fix Commits",
+      "inputs": {
+        "repository": {
+          "owner": "rust-lang",
+          "name": "rust"
+        },
+        "commits": [
+          "abc123def456",
+          "789abc012def",
+          "345678901abc"
+        ]
+      },
+      "config": {
+        "include_full_diff": true,
+        "analyze": {
+          "generate_summary": true
+        }
+      }
+    }
+  ]
+}
+
