@@ -25,7 +25,7 @@ echo ""
 
 # Extract spec directory to determine output location
 SPEC_DIR=$(dirname "$SPEC_FILE")
-BASE_DIR=$(echo "$SPEC_DIR" | sed 's|/ai-team/specs.*||')
+BASE_DIR="${SPEC_DIR%%/ai-team/specs*}"
 ARTIFACTS_DIR="${BASE_DIR}/ai-team/artifacts"
 
 mkdir -p "$ARTIFACTS_DIR"

@@ -6,24 +6,27 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = false;
         };
 
         # Python environment with common packages
-        pythonEnv = pkgs.python311.withPackages (ps: with ps; [
-          pip
-          setuptools
-          wheel
-          # Add more Python packages as needed
-        ]);
-
-      in
-      {
+        pythonEnv = pkgs.python311.withPackages (ps:
+          with ps; [
+            pip
+            setuptools
+            wheel
+            # Add more Python packages as needed
+          ]);
+      in {
         # Development shells for different workflows
         devShells = {
           # Default shell with common tools
@@ -33,27 +36,27 @@
               just
               jq
               direnv
-              
+
               # Version control
               git
-              
+
               # Node.js for Claude CLI and other tools
               nodejs_20
-              
+
               # Shell scripting
               shellcheck
               shfmt
-              
+
               # Text processing
               ripgrep
               fd
               bat
-              
+
               # Development tools
               curl
               wget
               unzip
-              
+
               # Python (minimal)
               pythonEnv
             ];
@@ -83,7 +86,7 @@
               rustfmt
               clippy
               rust-analyzer
-              
+
               # Common tools
               just
               jq
@@ -128,13 +131,13 @@
             buildInputs = with pkgs; [
               # Git tools
               git
-              gh  # GitHub CLI
-              
+              gh # GitHub CLI
+
               # Data processing
               jq
               yq
               csvkit
-              
+
               # Common tools
               just
               pythonEnv
@@ -171,15 +174,24 @@
 
         # Checks (for nix flake check)
         checks = {
-          # Shell scripts pass shellcheck
-          shell-check = pkgs.runCommand "shellcheck-scripts" {
-            buildInputs = [ pkgs.shellcheck ];
-          } ''
-            # Add script checking here when scripts exist
-            touch $out
-          '';
+          # Shellcheck all scripts
+          shellcheck =
+            pkgs.runCommand "shellcheck" {
+              buildInputs = [pkgs.shellcheck];
+            } ''
+              shellcheck ${./scripts}/*.sh
+              touch $out
+            '';
+
+          # Nix format check
+          nixfmt =
+            pkgs.runCommand "nixfmt-check" {
+              buildInputs = [pkgs.alejandra];
+            } ''
+              alejandra --check ${./.}
+              touch $out
+            '';
         };
       }
     );
 }
-

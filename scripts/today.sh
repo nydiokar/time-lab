@@ -9,9 +9,6 @@ IFS=$'\n\t'
 
 # Use UTC for determinism
 TODAY=$(date -u +%Y/%m/%d)
-YEAR=$(date -u +%Y)
-MONTH=$(date -u +%m)
-DAY=$(date -u +%d)
 
 echo "📅 Creating workspace for ${TODAY}"
 

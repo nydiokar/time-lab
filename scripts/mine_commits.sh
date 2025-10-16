@@ -27,7 +27,7 @@ mkdir -p "${ANALYZER_DIR}/inputs"
 mkdir -p "${ANALYZER_DIR}/outputs"
 
 # Create repo-specific directory
-REPO_SLUG=$(echo "$REPO" | sed 's|/|_|g')
+REPO_SLUG="${REPO//\//_}"
 OUTPUT_DIR="${ANALYZER_DIR}/outputs/${REPO_SLUG}"
 mkdir -p "$OUTPUT_DIR"
 
