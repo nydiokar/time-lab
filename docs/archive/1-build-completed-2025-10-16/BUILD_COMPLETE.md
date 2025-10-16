@@ -81,6 +81,28 @@ Build completed across 12 commits (phases 4-8):
 11. `fix: exclude bootstrap scripts from shellcheck pre-commit hook`
 12. Archive commit (this one)
 
+## Lessons Learned
+
+### Pre-commit Hook Installation
+
+**Issue**: Pre-commit hooks didn't run during the build session
+**Cause**: `.pre-commit-config.yaml` was created but `pre-commit install` was never run
+**Impact**: Hooks only triggered when user committed manually after build
+
+**Missing step in Phase 5**:
+```bash
+# After creating .pre-commit-config.yaml, should have run:
+pre-commit install       # ← Install hooks into .git/hooks/
+pre-commit run --all-files  # ← Test them
+```
+
+**What happened**:
+- Agent commits bypassed hooks (hooks not installed)
+- User's first commit triggered installation and caught issues
+- Issues were fixed retroactively
+
+**For future builds**: Add explicit hook installation and testing steps to Phase 5.
+
 ## Next Steps
 
 Now that the build is complete, focus shifts to:
