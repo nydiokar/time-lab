@@ -10,8 +10,6 @@ Navigate Time-Lab documentation by purpose and reading order.
 docs/
 ├── 0-start/           👋 First time? Start here
 │   └── GETTING_STARTED.md
-├── 1-build/           🔨 Building the system
-│   └── IMPLEMENTATION_GUIDE.md
 ├── 2-use/             🚀 Daily operations
 │   └── WORKFLOW.md
 ├── 3-extend/          🔧 Adding features
@@ -21,8 +19,12 @@ docs/
 │   ├── ARCHITECTURE.md
 │   ├── DECISIONS.md
 │   └── schemas/
-└── context/           🎓 Background
-    └── COMPARISON_TO_TIME_2025.md
+├── context/           🎓 Background
+│   └── COMPARISON_TO_TIME_2025.md
+└── archive/           📦 Completed phases
+    └── 1-build-completed-2025-10-16/
+        ├── IMPLEMENTATION_GUIDE.md
+        └── BUILD_COMPLETE.md
 ```
 
 ---
@@ -48,25 +50,30 @@ docs/
 
 ---
 
-### 1️⃣ Building
+### 📦 Build Archive (Completed 2025-10-16)
 
-#### **[IMPLEMENTATION_GUIDE.md](docs/1-build/IMPLEMENTATION_GUIDE.md)**
-**Purpose**: Build Time-Lab from scratch
+#### **[IMPLEMENTATION_GUIDE.md](docs/archive/1-build-completed-2025-10-16/IMPLEMENTATION_GUIDE.md)** ✅
+**Status**: Build complete - Archived for reference
 
-**Contents** (8 Phases):
-- Phase 0: Prerequisites and Nix setup
-- Phase 1: Foundation (flake.nix, .gitignore, Justfile)
-- Phase 2: Core Scripts (today.sh, run_llm_task.sh)
-- Phase 3: Rust Tools (rust_extractor)
-- Phase 4: Python Tools (py_post)
-- Phase 5: Quality & Safety (pre-commit, shellcheck)
-- Phase 6: Documentation & Schemas
-- Phase 7: CI/CD (GitHub Actions)
-- Phase 8: Validation (integration tests)
+**Contents** (8 Phases - All Complete):
+- ✅ Phase 0: Prerequisites and Nix setup
+- ✅ Phase 1: Foundation (flake.nix, .gitignore, Justfile)
+- ✅ Phase 2: Core Scripts (today.sh, run_llm_task.sh)
+- ✅ Phase 3: Rust Tools (rust_extractor)
+- ✅ Phase 4: Python Tools (py_post)
+- ✅ Phase 5: Quality & Safety (pre-commit, shellcheck)
+- ✅ Phase 6: Documentation & Schemas
+- ✅ Phase 7: CI/CD (GitHub Actions)
+- ✅ Phase 8: Validation (integration tests)
 
-**Use When**: Building the project for the first time
+**Build Summary**: See [BUILD_COMPLETE.md](docs/archive/1-build-completed-2025-10-16/BUILD_COMPLETE.md)
 
-**Time**: 1-2 days (following all phases)
+**Use When**:
+- Understanding how the system was built
+- Rebuilding in a new environment
+- Historical reference
+
+**Time**: Reference only (build already complete)
 
 ---
 
@@ -239,11 +246,11 @@ docs/
 3. docs/2-use/WORKFLOW.md (reference)
 ```
 
-#### 🏗️ Implementer (Building Time-Lab)
+#### 🏗️ Implementer (Building Time-Lab) - ✅ Build Complete
 ```
-1. docs/1-build/IMPLEMENTATION_GUIDE.md (follow phases)
-2. docs/reference/ARCHITECTURE.md (when stuck)
-3. docs/reference/DECISIONS.md (understand choices)
+Build completed 2025-10-16. For reference:
+1. docs/archive/1-build-completed-2025-10-16/BUILD_COMPLETE.md
+2. docs/archive/1-build-completed-2025-10-16/IMPLEMENTATION_GUIDE.md
 ```
 
 #### 🔍 Researcher (Understanding Patterns)
@@ -272,32 +279,35 @@ docs/
 
 ## 📊 Documentation Metrics
 
-| Document | Lines | Size | Purpose |
-|----------|-------|------|---------|
-| GETTING_STARTED.md | ~200 | 5.8KB | Onboarding |
-| IMPLEMENTATION_GUIDE.md | 1,543 | 34KB | Build guide |
-| WORKFLOW.md | ~100 | 2.9KB | Daily ops |
-| EXTENSION_GUIDE.md | 886 | 20KB | Extensions |
-| GLOSSARY.md | 558 | 13KB | Terms |
-| ARCHITECTURE.md | ~400 | 15KB | Design |
-| DECISIONS.md | 365 | 11KB | ADRs |
-| COMPARISON_TO_TIME_2025.md | 392 | 10KB | Context |
-| **Total** | **~4,500** | **~112KB** | Complete |
+| Document | Lines | Size | Status | Purpose |
+|----------|-------|------|--------|---------|
+| GETTING_STARTED.md | ~200 | 5.8KB | Active | Onboarding |
+| IMPLEMENTATION_GUIDE.md | 1,543 | 34KB | ✅ Archived | Build guide |
+| WORKFLOW.md | ~100 | 2.9KB | Active | Daily ops |
+| EXTENSION_GUIDE.md | 886 | 20KB | Active | Extensions |
+| GLOSSARY.md | 558 | 13KB | Active | Terms |
+| ARCHITECTURE.md | ~400 | 15KB | Active | Design |
+| DECISIONS.md | 365 | 11KB | Active | ADRs |
+| COMPARISON_TO_TIME_2025.md | 392 | 10KB | Active | Context |
+| BUILD_COMPLETE.md | ~100 | 3KB | ✅ Archived | Summary |
+| **Total** | **~4,600** | **~115KB** | Complete |
 
 ---
 
 ## 🗂️ Folder Organization
 
-The numbered folders indicate **reading order**:
+The numbered folders indicate **workflow progression**:
 
-- **0-start/** - Begin here
-- **1-build/** - Then build
-- **2-use/** - Then use daily
-- **3-extend/** - Then extend
-- **reference/** - Look up anytime
-- **context/** - Background info
+- **0-start/** - Begin here (onboarding)
+- **2-use/** - Daily operations (active development)
+- **3-extend/** - Add features (when needed)
+- **reference/** - Look up anytime (always relevant)
+- **context/** - Background info (optional)
+- **archive/** - Completed phases (historical reference)
 
-**Self-navigating**: Folder names tell you when to read them.
+**Note**: ~~1-build/~~ has been archived (build complete 2025-10-16)
+
+**Self-navigating**: Folder names tell you their purpose and state.
 
 ---
 
@@ -320,10 +330,13 @@ The numbered folders indicate **reading order**:
 
 ## 🚀 Quick Start Paths
 
-### Just Want to Build?
+### Build Already Complete ✅
 ```
-1. docs/1-build/IMPLEMENTATION_GUIDE.md
-   → Follow Phase 0-8
+Build finished 2025-10-16. See:
+1. docs/archive/1-build-completed-2025-10-16/BUILD_COMPLETE.md
+   → Summary of what was built
+2. docs/0-start/GETTING_STARTED.md
+   → Start using the system
 ```
 
 ### Just Want to Learn?
@@ -369,7 +382,7 @@ docs/reference/
 
 ---
 
-**Created**: 2025-10-15  
-**Status**: ✅ Active  
-**Last Updated**: After consolidation (v2.0)
+**Created**: 2025-10-15
+**Status**: ✅ Active
+**Last Updated**: 2025-10-16 (Build phase archived)
 

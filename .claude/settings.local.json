@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(nix:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\ndocs: archive completed build phase (2025-10-16)\n\nFollowing project''s date-based archival philosophy:\n\nChanges:\n- Create docs/archive/1-build-completed-2025-10-16/\n- Move IMPLEMENTATION_GUIDE.md to archive\n- Add BUILD_COMPLETE.md with build summary\n- Update DOCUMENTATION_INDEX.md to reflect archive\n- Remove empty docs/1-build/ directory\n\nRationale:\n- Build phase is complete, archive for historical reference\n- Follows YYYY-MM-DD pattern used throughout project\n- Clear state transition: Build → Complete → Archived\n- Focus documentation on active phases (0-start, 2-use, 3-extend)\n\nArchive contains:\n- Complete build guide (all 8 phases)\n- Build completion summary\n- Validation results\n- Session history (12 commits, phases 4-8)\n\nBuild status: ✅ All phases complete and tested\nNext steps: See docs/0-start/ and docs/2-use/\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
