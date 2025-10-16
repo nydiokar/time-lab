@@ -1,9 +1,9 @@
 # Current State
 
 **Project**: Time-Lab (nix_scafold)
-**Phase**: 5 (Quality & Safety)
-**Status**: Phase 1-4 Complete, Ready for Phase 5
-**Last Updated**: 2025-10-16 00:00 UTC
+**Phase**: 6 (Documentation & Schemas)
+**Status**: Phase 1-5 Complete, Ready for Phase 6
+**Last Updated**: 2025-10-16 00:30 UTC
 **Updated By**: Claude Sonnet 4.5
 
 ---
@@ -45,15 +45,21 @@
   - [x] Add to flake.nix python_ml devShell
   - [x] Test: Python tool runs
 
+- [x] Phase 5: Quality & Safety
+  - [x] Add pre-commit configuration
+  - [x] Initialize secrets baseline
+  - [x] Add checks to flake.nix
+  - [x] Test: All checks pass
+
 ## Active
 
-**Next Task**: Begin Phase 5 - Quality & Safety
+**Next Task**: Begin Phase 6 - Documentation & Schemas
 
-- [ ] Phase 5: Quality & Safety
-  - [ ] Add pre-commit configuration
-  - [ ] Initialize secrets baseline
-  - [ ] Add checks to flake.nix
-  - [ ] Test: All checks pass
+- [ ] Phase 6: Documentation & Schemas
+  - [ ] Create JSON schemas (run.schema.json, spec.schema.json)
+  - [ ] Create DECISIONS.md
+  - [ ] Create SOPS.md
+  - [ ] Verify schemas are accessible
 
 ---
 
@@ -64,7 +70,7 @@
 - [x] Phase 2: Core Scripts (today.sh, run_llm_task.sh)
 - [x] Phase 3: Rust Tools (rust_extractor)
 - [x] Phase 4: Python Tools (py_post)
-- [ ] Phase 5: Quality & Safety (pre-commit, shellcheck)
+- [x] Phase 5: Quality & Safety (pre-commit, shellcheck)
 - [ ] Phase 6: Documentation & Schemas
 - [ ] Phase 7: CI/CD (GitHub Actions)
 - [ ] Phase 8: Validation (tests)
@@ -98,6 +104,10 @@ None currently.
 - Phase 4: py_post tool created with click and pydantic
 - python_ml devShell updated to use venv approach
 - Python tool tested successfully with nix develop
+- Phase 5: Quality checks added and passing
+- Pre-commit hooks configured for code quality
+- Shellcheck issues fixed using parameter expansion
+- `nix flake check` passes successfully
 
 ---
 
