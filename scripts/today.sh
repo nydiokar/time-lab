@@ -66,19 +66,19 @@ if [ ! -f "${TODAY}/knowledge/notes.md" ]; then
 
 ## Experiments
 
-- 
+-
 
 ## Learnings
 
-- 
+-
 
 ## Next Steps
 
-- 
+-
 
 ## References
 
-- 
+-
 EOF
 fi
 
@@ -95,4 +95,3 @@ echo ""
 echo "🔗 Symlink: latest -> ${TODAY}"
 echo ""
 echo "📝 Next: Create a spec file with 'just init-spec <name>'"
-

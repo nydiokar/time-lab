@@ -174,7 +174,7 @@ If you discover missing prerequisites:
 
 2. **Stop and Inform User**:
    ```
-   Blocker: Nix is not installed. 
+   Blocker: Nix is not installed.
    Please install Nix with flakes, then I can continue with Phase 1.
    Installation: https://nixos.org/download.html
    ```
@@ -317,4 +317,3 @@ I'll continue with the remaining scripts (mine_commits.sh, summarize_diff.sh, sy
 ---
 
 **Remember**: CONTEXT.md is the source of truth. Keep it updated, and handoffs will be smooth.
-

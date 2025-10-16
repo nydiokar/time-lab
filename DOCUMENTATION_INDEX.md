@@ -110,7 +110,7 @@ docs/
 - Extension contracts (inputs, outputs, exit codes)
 - Plugin system (future)
 
-**Use When**: 
+**Use When**:
 - Adding new functionality
 - Integrating external services
 - Creating custom tools
@@ -364,7 +364,7 @@ docs/reference/
 
 ## 💡 Tips
 
-**Overwhelmed?** 
+**Overwhelmed?**
 - Start with `docs/0-start/GETTING_STARTED.md`
 - Ignore everything else until you need it
 
@@ -385,4 +385,3 @@ docs/reference/
 **Created**: 2025-10-15
 **Status**: ✅ Active
 **Last Updated**: 2025-10-16 (Build phase archived)
-

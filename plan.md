@@ -1,19 +1,19 @@
 # Time-Lab Scaffold (Improved Plan)
 
 ## Objective
-Build a **reproducible AI workbench** like the `time-2025` repo:  
-- Pinned Nix environment  
-- Daily artifact capture  
-- Small scripts → pipelines  
-- Rust/Python integration  
-- CI parity  
-- Ready for AI-team integration  
+Build a **reproducible AI workbench** like the `time-2025` repo:
+- Pinned Nix environment
+- Daily artifact capture
+- Small scripts → pipelines
+- Rust/Python integration
+- CI parity
+- Ready for AI-team integration
 
 ## Ground Rules
-- All runs happen inside **Nix flake devshells** or via `nix run`.  
-- Every run emits a `run.json` manifest and artifacts in a dated folder.  
-- One repo. One lockfile. Many profiles.  
-- Secrets kept outside git (`sops-nix` or `.env` files).  
+- All runs happen inside **Nix flake devshells** or via `nix run`.
+- Every run emits a `run.json` manifest and artifacts in a dated folder.
+- One repo. One lockfile. Many profiles.
+- Secrets kept outside git (`sops-nix` or `.env` files).
 - Determinism where possible; log seeds and model hashes.
 
 ---
@@ -70,83 +70,83 @@ Copy code
 
 ## Improvements Over Draft
 
-1. **Deterministic IDs & UTC timestamps**  
-   - `run_id = sha256(spec + git_sha + flake_lock + utc_timestamp)`  
+1. **Deterministic IDs & UTC timestamps**
+   - `run_id = sha256(spec + git_sha + flake_lock + utc_timestamp)`
    - `date -u +"%Y-%m-%dT%H:%M:%SZ"`
 
-2. **LLM reproducibility knobs**  
-   - Log `temperature, top_p, seed, max_tokens, stop`  
-   - Record model file hash/etag if possible  
+2. **LLM reproducibility knobs**
+   - Log `temperature, top_p, seed, max_tokens, stop`
+   - Record model file hash/etag if possible
 
-3. **Schema validation**  
-   - Add `schemas/run.schema.json` and `schemas/spec.schema.json`  
-   - Validate specs before run  
+3. **Schema validation**
+   - Add `schemas/run.schema.json` and `schemas/spec.schema.json`
+   - Validate specs before run
 
-4. **Safer shell**  
-   - `set -Eeuo pipefail; IFS=$'\n\t'` in scripts  
-   - Use `mktemp -d` for scratch dirs  
+4. **Safer shell**
+   - `set -Eeuo pipefail; IFS=$'\n\t'` in scripts
+   - Use `mktemp -d` for scratch dirs
 
-5. **Profile isolation**  
-   - Root `.envrc` minimal (`use flake .`)  
-   - Subfolders choose profiles (`use flake ../..#rust_an`)  
+5. **Profile isolation**
+   - Root `.envrc` minimal (`use flake .`)
+   - Subfolders choose profiles (`use flake ../..#rust_an`)
 
-6. **Lint & format**  
-   - Nix: `alejandra`  
-   - Rust: `cargo fmt`, `cargo clippy`  
-   - Python: `ruff`, `black`, `mypy`  
+6. **Lint & format**
+   - Nix: `alejandra`
+   - Rust: `cargo fmt`, `cargo clippy`
+   - Python: `ruff`, `black`, `mypy`
    - Shell: `shellcheck`
 
-7. **Pre-commit hooks**  
-   - black, ruff, mypy, shellcheck, detect-secrets, trailing-whitespace  
+7. **Pre-commit hooks**
+   - black, ruff, mypy, shellcheck, detect-secrets, trailing-whitespace
 
-8. **Secrets**  
-   - `detect-secrets` baseline  
-   - `.env` not in git  
+8. **Secrets**
+   - `detect-secrets` baseline
+   - `.env` not in git
    - Later adopt `sops-nix`
 
-9. **Provenance**  
-   - Add `git describe` + `nix flake metadata` to manifests  
+9. **Provenance**
+   - Add `git describe` + `nix flake metadata` to manifests
 
-10. **Artifact layout**  
-   - `YYYY/MM/DD`  
-   - Inside run: `run.json`, `input/`, `output/`, `logs/`  
-   - `latest/` symlink + `runs.csv`  
+10. **Artifact layout**
+   - `YYYY/MM/DD`
+   - Inside run: `run.json`, `input/`, `output/`, `logs/`
+   - `latest/` symlink + `runs.csv`
 
-11. **CI upgrades**  
-   - Add Cachix later  
-   - E2E test with small fixture  
+11. **CI upgrades**
+   - Add Cachix later
+   - E2E test with small fixture
 
-12. **Network safety**  
-   - Default offline; `allow_net: true` must be explicit  
+12. **Network safety**
+   - Default offline; `allow_net: true` must be explicit
 
-13. **Git mining optimization**  
-   - Use shallow `--filter=blob:none` instead of repeated fetches  
+13. **Git mining optimization**
+   - Use shallow `--filter=blob:none` instead of repeated fetches
 
-14. **Python packaging**  
-   - Start with pip in Nix devshell  
-   - Upgrade to `uv` or `poetry2nix` later  
+14. **Python packaging**
+   - Start with pip in Nix devshell
+   - Upgrade to `uv` or `poetry2nix` later
 
-15. **Justfile interface**  
-   - Add `just day`, `just ai`, `just mine`, `just summ`, `just check`  
+15. **Justfile interface**
+   - Add `just day`, `just ai`, `just mine`, `just summ`, `just check`
 
-16. **Timezone clarity**  
-   - Canonical UTC in `run.json`, optional local time  
+16. **Timezone clarity**
+   - Canonical UTC in `run.json`, optional local time
 
-17. **Fixtures for tests**  
-   - `tests/fixtures/` with tiny specs/diffs  
+17. **Fixtures for tests**
+   - `tests/fixtures/` with tiny specs/diffs
 
-18. **Lockfile governance**  
-   - Document how to update/review `flake.lock`  
+18. **Lockfile governance**
+   - Document how to update/review `flake.lock`
 
-19. **Security posture**  
-   - Run as non-root  
-   - Secrets dir `0700`  
-   - Optional: dedicated system user  
+19. **Security posture**
+   - Run as non-root
+   - Secrets dir `0700`
+   - Optional: dedicated system user
 
-20. **AI-team contract**  
-   - Freeze `spec.json` schema  
-   - Return codes: `0` success, `64` usage, `65` data, `70` internal  
-   - Only read artifacts folder, not stdout  
+20. **AI-team contract**
+   - Freeze `spec.json` schema
+   - Return codes: `0` success, `64` usage, `65` data, `70` internal
+   - Only read artifacts folder, not stdout
 
 ---
 

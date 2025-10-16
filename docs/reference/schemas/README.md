@@ -202,18 +202,18 @@ Scripts should validate specs before execution:
 # In run_llm_task.sh
 validate_spec() {
   local spec_file="$1"
-  
+
   # Basic JSON validation
   if ! jq empty "$spec_file" 2>/dev/null; then
     echo "Error: Invalid JSON in spec file" >&2
     return 65
   fi
-  
+
   # Schema validation (if ajv is available)
   if command -v ajv &> /dev/null; then
     local kind=$(jq -r '.kind' "$spec_file")
     local schema="docs/schemas/${kind}_task.schema.json"
-    
+
     if [ -f "$schema" ]; then
       if ! ajv validate -s "$schema" -d "$spec_file" 2>/dev/null; then
         echo "Error: Spec does not match schema: $schema" >&2
@@ -221,7 +221,7 @@ validate_spec() {
       fi
     fi
   fi
-  
+
   return 0
 }
 ```
@@ -289,6 +289,5 @@ When adding a new schema:
 
 ---
 
-**Last Updated**: 2025-10-15  
+**Last Updated**: 2025-10-15
 **Schema Version**: 1.0
-

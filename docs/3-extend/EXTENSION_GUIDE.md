@@ -191,21 +191,21 @@ METRICS_FILE="$ARTIFACTS_DIR/metrics_${RUN_ID:0:8}.json"
 case "$LANGUAGE" in
   rust)
     cd "$SOURCE_DIR"
-    
+
     # Start timing
     START_TIME=$(date +%s)
-    
+
     # Compile
     if [ "$OPT_LEVEL" = "release" ]; then
       cargo build --release -j "$PARALLEL_JOBS" 2>&1 | tee "$BUILD_LOG"
     else
       cargo build -j "$PARALLEL_JOBS" 2>&1 | tee "$BUILD_LOG"
     fi
-    
+
     # End timing
     END_TIME=$(date +%s)
     DURATION=$((END_TIME - START_TIME))
-    
+
     # Collect metrics
     cat > "$METRICS_FILE" << METRICS_EOF
 {
@@ -218,12 +218,12 @@ case "$LANGUAGE" in
 }
 METRICS_EOF
     ;;
-    
+
   python)
     # Python compilation (bytecode)
     python3 -m py_compile "$SOURCE_DIR"/*.py 2>&1 | tee "$BUILD_LOG"
     ;;
-    
+
   *)
     echo "Error: Unsupported language: $LANGUAGE" >&2
     exit 65
@@ -236,8 +236,8 @@ TIMESTAMP_END=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 jq --arg ts "$TIMESTAMP_END" \
    --arg status "ok" \
    --slurpfile metrics "$METRICS_FILE" \
-   '.timestamp_end = $ts | 
-    .status = $status | 
+   '.timestamp_end = $ts |
+    .status = $status |
     .metrics = $metrics[0] |
     .artifacts = ["build_'"${RUN_ID:0:8}"'.log", "metrics_'"${RUN_ID:0:8}"'.json"]' \
    "$RUN_MANIFEST" > "${RUN_MANIFEST}.tmp" && \
@@ -371,13 +371,13 @@ def cli(input: str, output: str) -> None:
     """Analyze CSV file and output summary statistics."""
     click.echo(f"📊 CSV Analyzer")
     click.echo(f"   Input: {input}")
-    
+
     # Read CSV
     df: pd.DataFrame = pd.read_csv(input)
-    
+
     # Analyze
     numeric_cols: list[str] = df.select_dtypes(include=['number']).columns.tolist()
-    
+
     summary_stats: dict[str, dict[str, float]] = {}
     for col in numeric_cols:
         summary_stats[col] = {
@@ -386,7 +386,7 @@ def cli(input: str, output: str) -> None:
             "min": float(df[col].min()),
             "max": float(df[col].max()),
         }
-    
+
     # Create result
     result: AnalysisResult = AnalysisResult(
         rows=len(df),
@@ -395,11 +395,11 @@ def cli(input: str, output: str) -> None:
         numeric_columns=numeric_cols,
         summary_stats=summary_stats,
     )
-    
+
     # Write output
     with open(output, 'w') as f:
         f.write(result.model_dump_json(indent=2))
-    
+
     click.echo(f"✅ Analyzed {result.rows} rows, {result.columns} columns")
     click.echo(f"   Output: {output}")
 
@@ -415,18 +415,18 @@ Update `flake.nix`:
 ```nix
 packages = {
   # ... existing packages ...
-  
+
   csv_analyzer = pkgs.python311Packages.buildPythonPackage {
     pname = "csv-analyzer";
     version = "0.1.0";
     src = ./tools/csv_analyzer;
-    
+
     propagatedBuildInputs = with pkgs.python311Packages; [
       pandas
       click
       pydantic
     ];
-    
+
     format = "pyproject";
   };
 };
@@ -467,7 +467,7 @@ analyze-csv input output:
 ```nix
 devShells = {
   # ... existing shells ...
-  
+
   data_science = pkgs.mkShell {
     name = "time-lab-data-science";
     buildInputs = with pkgs; [
@@ -478,22 +478,22 @@ devShells = {
       python311Packages.matplotlib
       python311Packages.jupyter
       python311Packages.scikit-learn
-      
+
       # R (optional)
       R
       rPackages.tidyverse
-      
+
       # Tools
       jq
       just
       git
     ];
-    
+
     shellHook = ''
       echo "📊 Data Science Environment"
       echo "   Python: $(python --version)"
       echo "   Packages: pandas, numpy, matplotlib, jupyter, scikit-learn"
-      
+
       # Create venv if needed
       if [ ! -d .venv-ds ]; then
         python -m venv .venv-ds
@@ -560,16 +560,16 @@ GITHUB_CONFIG="${GITHUB_CONFIG:-configs/github.json}"
 github_api_call() {
   local endpoint="$1"
   local method="${2:-GET}"
-  
+
   # Load config
   if [ ! -f "$GITHUB_CONFIG" ]; then
     echo "Error: GitHub config not found: $GITHUB_CONFIG" >&2
     return 1
   fi
-  
+
   local api_url=$(jq -r '.api_url' "$GITHUB_CONFIG")
   local token=$(jq -r '.token' "$GITHUB_CONFIG")
-  
+
   # Make request
   curl -X "$method" \
     -H "Authorization: token $token" \
@@ -581,7 +581,7 @@ github_get_commits() {
   local owner="$1"
   local repo="$2"
   local limit="${3:-10}"
-  
+
   github_api_call "/repos/${owner}/${repo}/commits?per_page=${limit}"
 }
 
@@ -589,7 +589,7 @@ github_get_commit_diff() {
   local owner="$1"
   local repo="$2"
   local sha="$3"
-  
+
   github_api_call "/repos/${owner}/${repo}/commits/${sha}" | \
     jq -r '.files[] | .patch' | \
     grep -v '^null$'
@@ -620,19 +620,19 @@ COMMITS=$(github_get_commits "$OWNER" "$REPO" "$LIMIT")
 # Process each commit
 echo "$COMMITS" | jq -r '.[].sha' | while read sha; do
   echo "Processing commit: $sha"
-  
+
   # Create output directory
   mkdir -p "latest/analyzer/outputs/commit_${sha}"
-  
+
   # Get commit details
   github_api_call "/repos/${OWNER}/${REPO}/commits/${sha}" > \
     "latest/analyzer/outputs/commit_${sha}/metadata.json"
-  
+
   # Extract message
   jq -r '.commit.message' \
     "latest/analyzer/outputs/commit_${sha}/metadata.json" > \
     "latest/analyzer/outputs/commit_${sha}/commit_message.txt"
-  
+
   # Get diff
   github_get_commit_diff "$OWNER" "$REPO" "$sha" > \
     "latest/analyzer/outputs/commit_${sha}/full_diff.txt"
@@ -880,6 +880,5 @@ See these extensions for reference:
 
 ---
 
-**Last Updated**: 2025-10-15  
+**Last Updated**: 2025-10-15
 **Version**: 1.0
-

@@ -2,16 +2,16 @@
 
 ## Experiments
 
-- 
+-
 
 ## Learnings
 
-- 
+-
 
 ## Next Steps
 
-- 
+-
 
 ## References
 
-- 
+-

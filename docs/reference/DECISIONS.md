@@ -16,7 +16,7 @@ Each decision should include:
 
 ## D001: VM on Windows Host, No Docker
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Development on Windows requires Linux tooling for Nix, but Docker adds overhead and complexity.
@@ -35,7 +35,7 @@ Each decision should include:
 
 ## D002: Single Monorepo
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need to manage multiple tools (Rust, Python, scripts) for AI experiments with consistent versioning.
@@ -59,7 +59,7 @@ Each decision should include:
 
 ## D003: Date Tree YYYY/MM/DD
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need intuitive organization for daily experimental work that matches how researchers think about their work.
@@ -85,7 +85,7 @@ Each decision should include:
 
 ## D004: Run Manifests Must Follow Schema
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need reproducibility and traceability of all executions with machine-readable format.
@@ -111,7 +111,7 @@ Each decision should include:
 
 ## D005: Model Calls Logged with Params + Seed
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: LLM outputs are non-deterministic without parameter tracking, making experiments hard to reproduce.
@@ -136,7 +136,7 @@ Each decision should include:
 
 ## D006: Existing Projects Wrapped via DevShells
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Want to integrate existing Rust/Python projects without requiring immediate full nixification.
@@ -163,7 +163,7 @@ Each decision should include:
 
 ## D007: UTC Timestamps Everywhere
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Timezone ambiguity makes it hard to correlate events and reproduces.
@@ -186,7 +186,7 @@ Each decision should include:
 
 ## D008: Secrets Outside Git (SOPS or .env)
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need to manage API keys and credentials without committing them to git.
@@ -211,7 +211,7 @@ Each decision should include:
 
 ## D009: Shell Scripts with Strict Mode
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Bash scripts can silently fail or produce unexpected results without proper error handling.
@@ -238,7 +238,7 @@ IFS=$'\n\t'
 
 ## D010: Network Offline by Default
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Proposed
 
 **Context**: Uncontrolled network access makes builds non-reproducible and potentially insecure.
@@ -259,7 +259,7 @@ IFS=$'\n\t'
 
 ## D011: Pre-commit Hooks for Quality
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Want to catch formatting, linting, and security issues before they enter git history.
@@ -286,7 +286,7 @@ IFS=$'\n\t'
 
 ## D012: Justfile for Task Running
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need simple, readable way to run common tasks without remembering complex commands.
@@ -314,13 +314,13 @@ IFS=$'\n\t'
 ```markdown
 ## D0XX: Short Title
 
-**Date**: YYYY-MM-DD  
+**Date**: YYYY-MM-DD
 **Status**: Proposed | Accepted | Deprecated | Superseded
 
-**Context**: 
+**Context**:
 What is the situation and problem? What forces are at play?
 
-**Decision**: 
+**Decision**:
 What did we decide to do? Be specific and actionable.
 
 **Consequences**:
@@ -359,6 +359,5 @@ What did we decide to do? Be specific and actionable.
 
 ---
 
-**Last Updated**: 2025-10-15  
+**Last Updated**: 2025-10-15
 **Next Review**: 2026-01-15
-

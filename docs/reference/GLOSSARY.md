@@ -481,11 +481,11 @@ pkgs.mkShell {
 
 ## Anti-Patterns (What NOT to call things)
 
-❌ **Job** → Use [Task](#task) or [Run](#run)  
-❌ **Experiment** → Use [Run](#run) (more specific)  
-❌ **Output** → Use [Artifact](#artifact) (clearer)  
-❌ **Config** → Use [Spec](#spec) for inputs, "Manifest" for outputs  
-❌ **Profile** and "Shell" → Both refer to [DevShell](#devshell), use "DevShell" in code  
+❌ **Job** → Use [Task](#task) or [Run](#run)
+❌ **Experiment** → Use [Run](#run) (more specific)
+❌ **Output** → Use [Artifact](#artifact) (clearer)
+❌ **Config** → Use [Spec](#spec) for inputs, "Manifest" for outputs
+❌ **Profile** and "Shell" → Both refer to [DevShell](#devshell), use "DevShell" in code
 
 ---
 
@@ -552,6 +552,5 @@ When adding new terms:
 
 ---
 
-**Last Updated**: 2025-10-15  
+**Last Updated**: 2025-10-15
 **Status**: v1.0 - Canonical definitions
-

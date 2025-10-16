@@ -77,7 +77,7 @@ EOF
 else
   echo "⚠️  Not in a git repository"
   echo "Creating placeholder summary..."
-  
+
   cat > "$OUTPUT_FILE" << EOF
 # Commit Summary: ${COMMIT_SHA}
 
@@ -98,4 +98,3 @@ fi
 
 echo ""
 echo "📄 View: cat $OUTPUT_FILE"
-

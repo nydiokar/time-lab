@@ -177,15 +177,15 @@ EOF
               just
               jq
               git
-              
+
               # Shell tools
               shellcheck
               shfmt
-              
+
               # Development
               direnv
             ];
-            
+
             shellHook = ''
               echo "🧪 Time-Lab Development Environment"
               echo "Run 'just' to see available commands"
@@ -1061,7 +1061,7 @@ Each decision should include:
 
 ## D001: VM on Windows Host, No Docker
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Development on Windows requires Linux tooling for Nix.
@@ -1078,7 +1078,7 @@ Each decision should include:
 
 ## D002: Single Monorepo
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need to manage multiple tools (Rust, Python, scripts) for AI experiments.
@@ -1096,7 +1096,7 @@ Each decision should include:
 
 ## D003: Date Tree YYYY/MM/DD
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need intuitive organization for daily experimental work.
@@ -1114,7 +1114,7 @@ Each decision should include:
 
 ## D004: Run Manifests Must Follow Schema
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Need reproducibility and traceability of all executions.
@@ -1132,7 +1132,7 @@ Each decision should include:
 
 ## D005: Model Calls Logged with Params + Seed
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: LLM outputs are non-deterministic without parameter tracking.
@@ -1149,7 +1149,7 @@ Each decision should include:
 
 ## D006: Existing Projects Wrapped via DevShells
 
-**Date**: 2025-10-15  
+**Date**: 2025-10-15
 **Status**: Accepted
 
 **Context**: Want to integrate existing Rust/Python projects without rewriting.
@@ -1170,7 +1170,7 @@ Each decision should include:
 ```markdown
 ## D00X: Short Title
 
-**Date**: YYYY-MM-DD  
+**Date**: YYYY-MM-DD
 **Status**: Proposed | Accepted | Deprecated
 
 **Context**: What is the situation and problem?
@@ -1537,6 +1537,5 @@ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
 ---
 
-**Status**: 📋 Implementation Guide v1.0  
+**Status**: 📋 Implementation Guide v1.0
 **Last Updated**: 2025-10-15
-

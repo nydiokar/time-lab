@@ -80,9 +80,9 @@ init-spec name:
     TODAY=$(date -u +%Y/%m/%d)
     SPEC_DIR="${TODAY}/ai-team/specs"
     SPEC_FILE="${SPEC_DIR}/{{name}}.json"
-    
+
     mkdir -p "${SPEC_DIR}"
-    
+
     cat > "${SPEC_FILE}" << 'EOF'
     {
       "task": "{{name}}",
@@ -97,7 +97,7 @@ init-spec name:
       "output_format": "json"
     }
     EOF
-    
+
     echo "✅ Created spec: ${SPEC_FILE}"
 
 # Run flake checks
@@ -129,4 +129,3 @@ info:
     @echo ""
     @echo "Flake metadata:"
     @nix flake metadata --json | jq -r '.url, .locked.rev[0:7]'
-

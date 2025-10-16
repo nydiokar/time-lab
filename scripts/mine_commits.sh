@@ -58,4 +58,3 @@ echo "   1. Clone or fetch repository (use shallow clones)"
 echo "   2. Extract commit metadata (sha, author, date, message)"
 echo "   3. Optionally extract diffs"
 echo "   4. Save to structured JSON format"
-

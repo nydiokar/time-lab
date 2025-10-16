@@ -135,10 +135,10 @@ def process_data(input: dict) -> dict:
     # Validate
     if not input:
         raise ValueError("Input required")
-    
+
     # Process
     result = transform(input)
-    
+
     # Return
     return result
 ```
@@ -157,4 +157,3 @@ def process_data(input: dict) -> dict:
 ---
 
 **Remember**: Follow existing patterns. Keep changes focused. Test everything.
-

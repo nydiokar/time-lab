@@ -16,7 +16,8 @@ echo "Test 2: Run LLM task"
 mkdir -p 2025/10/16/ai-team/specs
 echo '{"kind":"llm","version":"1.0","inputs":{}}' > 2025/10/16/ai-team/specs/test.json
 ./scripts/run_llm_task.sh 2025/10/16/ai-team/specs/test.json
-[ -d 2025/10/16/ai-team/artifacts/run_* ] || exit 1
+# Check if at least one run_* directory exists
+compgen -G "2025/10/16/ai-team/artifacts/run_*" > /dev/null || exit 1
 echo "✅ Pass"
 
 # Test 3: Validate manifest

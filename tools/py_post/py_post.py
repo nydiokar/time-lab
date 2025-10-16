@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Post-processing tool for Time-Lab artifacts."""
 
-from pathlib import Path
 from typing import Any
 import json
 import click
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class RunManifest(BaseModel):
     """Run manifest schema."""
+
     run_id: str
     timestamp_start: str
     timestamp_end: str | None = None
@@ -19,16 +19,16 @@ class RunManifest(BaseModel):
 
 
 @click.command()
-@click.option('--input', '-i', type=click.Path(exists=True), required=True)
-@click.option('--output', '-o', type=click.Path(), required=True)
+@click.option("--input", "-i", type=click.Path(exists=True), required=True)
+@click.option("--output", "-o", type=click.Path(), required=True)
 def process(input: str, output: str) -> None:
     """Process run manifest and extract insights."""
-    click.echo(f"🐍 Python Post-Processor")
+    click.echo("🐍 Python Post-Processor")
     click.echo(f"   Input: {input}")
     click.echo(f"   Output: {output}")
 
     # Read manifest
-    with open(input, 'r') as f:
+    with open(input, "r") as f:
         data: dict[str, Any] = json.load(f)
 
     # Validate
@@ -42,11 +42,11 @@ def process(input: str, output: str) -> None:
     }
 
     # Write output
-    with open(output, 'w') as f:
+    with open(output, "w") as f:
         json.dump(result, f, indent=2)
 
     click.echo(f"✅ Processed: {manifest.run_id[:8]}...")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     process()

@@ -1,9 +1,9 @@
 # Current State
 
-**Project**: [PROJECT_NAME]  
-**Goal**: [MAIN_GOAL]  
-**Status**: [Not Started | In Progress | Blocked | Complete]  
-**Last Updated**: YYYY-MM-DD HH:MM UTC  
+**Project**: [PROJECT_NAME]
+**Goal**: [MAIN_GOAL]
+**Status**: [Not Started | In Progress | Blocked | Complete]
+**Last Updated**: YYYY-MM-DD HH:MM UTC
 **Updated By**: [LLM Name]
 
 ---
@@ -53,7 +53,6 @@
 
 ## Quick Reference
 
-**Main Docs**: [Path to primary documentation]  
-**Build Guide**: [If exists]  
+**Main Docs**: [Path to primary documentation]
+**Build Guide**: [If exists]
 **API Docs**: [If exists]
-

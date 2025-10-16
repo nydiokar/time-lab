@@ -130,17 +130,17 @@ nix flake show nixpkgs 2>/dev/null || echo "Note: Test flake command completed"
 if [ -f "flake.nix" ]; then
     echo ""
     echo "📦 Setting up Claude CLI..."
-    
+
     # Install to user's local directory (not Nix store)
     nix develop --command bash -c "npm install -g --prefix ~/.local @anthropic-ai/claude-code" || echo "Note: Will install Claude CLI to ~/.local"
-    
+
     # Add ~/.local/bin to PATH if not already there
     if [ -f ~/.bashrc ] && ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc; then
         echo '' >> ~/.bashrc
         echo '# User-local binaries' >> ~/.bashrc
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
     fi
-    
+
     echo "✅ Claude CLI installed to ~/.local/bin"
 fi
 

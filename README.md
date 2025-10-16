@@ -127,12 +127,12 @@ Multiple Nix devShell profiles for different workflows:
 
 ## Key Features
 
-✅ **Reproducible Builds**: Nix ensures same inputs → same outputs  
-✅ **Provenance Tracking**: `git describe` + `nix flake metadata` in manifests  
-✅ **Schema Validation**: JSON schemas for specs and run manifests  
-✅ **Pre-commit Hooks**: black, ruff, mypy, shellcheck, detect-secrets  
-✅ **CI/CD Ready**: GitHub Actions workflow with `nix flake check`  
-✅ **Secrets Management**: sops-nix integration (or `.env` files)  
+✅ **Reproducible Builds**: Nix ensures same inputs → same outputs
+✅ **Provenance Tracking**: `git describe` + `nix flake metadata` in manifests
+✅ **Schema Validation**: JSON schemas for specs and run manifests
+✅ **Pre-commit Hooks**: black, ruff, mypy, shellcheck, detect-secrets
+✅ **CI/CD Ready**: GitHub Actions workflow with `nix flake check`
+✅ **Secrets Management**: sops-nix integration (or `.env` files)
 ✅ **Safety First**: Non-root execution, hardened shell scripts
 
 ## Development Workflow
@@ -226,6 +226,5 @@ See [DEVELOPMENT_WORKFLOW.md](docs/DEVELOPMENT_WORKFLOW.md) for:
 
 ---
 
-**Status**: 🚧 In Development  
+**Status**: 🚧 In Development
 **Inspiration**: [time-2025 repository](https://github.com/meta-introspector/time-2025)
-

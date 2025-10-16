@@ -32,4 +32,3 @@ echo "Next steps:"
 echo "1. Edit .ai/GUIDE.md with your task list"
 echo "2. Update .ai/CONTEXT.md with environment details"
 echo "3. Tell your AI agent: 'Read .ai/ folder and begin work'"
-

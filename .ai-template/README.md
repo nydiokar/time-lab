@@ -113,11 +113,11 @@ None exists. Explore codebase:
 
 ## Benefits
 
-**Universal**: Works with any LLM, any project  
-**Lightweight**: ~5KB total  
-**Self-updating**: AI keeps CONTEXT.md current  
-**Portable**: Copy to any project  
-**Simple**: 4 files, clear roles  
+**Universal**: Works with any LLM, any project
+**Lightweight**: ~5KB total
+**Self-updating**: AI keeps CONTEXT.md current
+**Portable**: Copy to any project
+**Simple**: 4 files, clear roles
 
 ## Examples
 
@@ -176,4 +176,3 @@ Improvements to template:
 ## License
 
 Public domain. Use anywhere.
-

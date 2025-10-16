@@ -63,4 +63,3 @@ Read .ai/CONTEXT.md for current state, then continue from the next incomplete ta
 ---
 
 **Keep CONTEXT.md updated and handoffs will be smooth.**
-

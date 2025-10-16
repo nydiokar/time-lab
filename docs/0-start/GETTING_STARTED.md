@@ -143,9 +143,9 @@ cat latest/ai-team/artifacts/output.md
 cat >> latest/knowledge/notes.md << 'EOF'
 ## Nix Tutorial Generation
 
-**Run**: a3f5b2c1  
-**Model**: Qwen2.5 7B  
-**Temperature**: 0.7  
+**Run**: a3f5b2c1
+**Model**: Qwen2.5 7B
+**Temperature**: 0.7
 
 ### Results
 - Generated clear, beginner-friendly content
@@ -267,12 +267,12 @@ cd latest/ai-team/artifacts  # Use latest/ symlink
 
 ## What You Learned
 
-✅ Create workspace with `just day`  
-✅ Write specs following schema  
-✅ Run tasks via `just` commands  
-✅ Examine manifests for provenance  
-✅ Analyze artifacts  
-✅ Document findings  
+✅ Create workspace with `just day`
+✅ Write specs following schema
+✅ Run tasks via `just` commands
+✅ Examine manifests for provenance
+✅ Analyze artifacts
+✅ Document findings
 
 ### The Loop
 
@@ -284,13 +284,12 @@ Spec → Validation → Run → Manifest → Artifacts → Analysis → Knowledg
 
 ## Next Steps
 
-**Building**: See `docs/1-build/IMPLEMENTATION_GUIDE.md`  
-**Daily use**: See `docs/2-use/WORKFLOW.md`  
-**Extending**: See `docs/3-extend/EXTENSION_GUIDE.md`  
+**Building**: See `docs/1-build/IMPLEMENTATION_GUIDE.md`
+**Daily use**: See `docs/2-use/WORKFLOW.md`
+**Extending**: See `docs/3-extend/EXTENSION_GUIDE.md`
 **Reference**: See `docs/reference/`
 
 ---
 
-**Time to complete**: 30 minutes  
+**Time to complete**: 30 minutes
 **You're ready to experiment!** 🚀
-

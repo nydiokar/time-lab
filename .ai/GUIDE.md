@@ -213,4 +213,3 @@ nix flake update
 ---
 
 **Remember**: Follow IMPLEMENTATION_GUIDE.md exactly. Don't improvise. Validate each step.
-

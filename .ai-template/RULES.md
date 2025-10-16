@@ -164,4 +164,3 @@ Provide context:
 ---
 
 **Golden Rule**: Make minimal, focused changes. Update context frequently. Ask when uncertain.
-

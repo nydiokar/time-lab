@@ -167,12 +167,11 @@ cargo build
 
 ## Troubleshooting
 
-**Nix build fails**: `nix build .#rust_extractor --rebuild`  
-**Pre-commit fails**: `black . && ruff check --fix .`  
-**Python imports fail**: `source .venv/bin/activate`  
+**Nix build fails**: `nix build .#rust_extractor --rebuild`
+**Pre-commit fails**: `black . && ruff check --fix .`
+**Python imports fail**: `source .venv/bin/activate`
 **Disk space low**: `nix-collect-garbage --delete-older-than 7d`
 
 ---
 
 See `docs/reference/` for detailed references.
-

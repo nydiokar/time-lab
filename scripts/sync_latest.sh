@@ -43,4 +43,3 @@ echo ""
 echo "📈 Scan complete"
 echo "   Latest: $LATEST_DIR"
 echo "   Runs tracked in: runs.csv"
-

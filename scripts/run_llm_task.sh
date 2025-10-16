@@ -81,4 +81,3 @@ echo "   1. Add API client (OpenAI, Anthropic, Ollama, etc.)"
 echo "   2. Parse spec.json for model parameters"
 echo "   3. Execute API call with deterministic settings"
 echo "   4. Save response to ${RUN_DIR}/output.json"
-
