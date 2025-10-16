@@ -101,20 +101,10 @@
           # Python ML environment
           python_ml = pkgs.mkShell {
             buildInputs = with pkgs; [
-              # Python with extended packages
-              (python311.withPackages (ps: with ps; [
-                pip
-                setuptools
-                wheel
-                pydantic
-                jsonschema
-                requests
-                # Add ML libraries as needed:
-                # numpy
-                # pandas
-                # torch
-              ]))
-              
+              python311
+              python311Packages.pip
+              python311Packages.virtualenv
+
               # Common tools
               just
               jq
@@ -123,10 +113,13 @@
 
             shellHook = ''
               echo "🐍 Python ML Environment"
-              echo "python --version: $(python --version)"
-              echo ""
-              echo "Install additional packages:"
-              echo "  pip install <package>  # Installs to user site-packages"
+              # Create venv if it doesn't exist
+              if [ ! -d .venv ]; then
+                python -m venv .venv
+              fi
+              source .venv/bin/activate
+              pip install -q --upgrade pip
+              pip install -q -e "tools/py_post[dev]"
             '';
           };
 
