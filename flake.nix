@@ -59,6 +59,9 @@
 
               # Python (minimal)
               pythonEnv
+
+              # Quality tools
+              pre-commit
             ];
 
             shellHook = ''
