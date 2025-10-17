@@ -11,6 +11,35 @@ Complete guide from installation to your first experiment. **Time**: 30 minutes.
 - **5GB disk space** for Nix store
 - **OS**: Linux, macOS, or WSL2 on Windows
 
+### WSL2 Users: CRITICAL Setup
+
+**⚠️ If you're on Windows using WSL2, run the bootstrap script first:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/YOUR_REPO/main/bootstrap-wsl2.sh | bash
+```
+
+**Why?** WSL2 by default pollutes your Linux environment with Windows PATH, breaking reproducibility. The bootstrap script:
+1. Configures `/etc/wsl.conf` to isolate WSL from Windows
+2. Installs Nix properly
+3. Sets up the development environment
+
+**Manual WSL isolation** (if you skipped bootstrap):
+```bash
+sudo nano /etc/wsl.conf
+# Add:
+[interop]
+appendWindowsPath = false
+
+# Then restart WSL from PowerShell:
+wsl --shutdown
+```
+
+**Verify isolation:**
+```bash
+echo $PATH | grep -c mnt/c  # Should output: 0
+```
+
 ### Install Nix
 
 ```bash

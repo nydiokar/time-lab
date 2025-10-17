@@ -22,6 +22,75 @@ if ! grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
     fi
 fi
 
+# Configure WSL for proper isolation (CRITICAL for reproducibility)
+echo "🔒 Configuring WSL isolation..."
+if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
+    # Check if we need to configure /etc/wsl.conf
+    if [ ! -f /etc/wsl.conf ] || ! grep -q "appendWindowsPath = false" /etc/wsl.conf; then
+        echo "⚠️  IMPORTANT: WSL needs isolation configuration"
+        echo ""
+        echo "By default, WSL pollutes your Linux PATH with Windows programs."
+        echo "This BREAKS reproducibility - different PCs will have different Windows software."
+        echo ""
+        echo "We need to add this to /etc/wsl.conf:"
+        echo ""
+        echo "[interop]"
+        echo "appendWindowsPath = false"
+        echo ""
+        echo "This requires sudo and a WSL restart (wsl --shutdown from Windows)."
+        echo ""
+        echo -n "Configure WSL isolation now? (HIGHLY RECOMMENDED) (y/n): "
+        read -r wsl_config_response
+
+        if [[ "$wsl_config_response" =~ ^[Yy]$ ]]; then
+            # Backup existing wsl.conf if it exists
+            if [ -f /etc/wsl.conf ]; then
+                sudo cp /etc/wsl.conf /etc/wsl.conf.backup
+                echo "📋 Backed up existing /etc/wsl.conf"
+            fi
+
+            # Create or append to wsl.conf
+            if [ ! -f /etc/wsl.conf ]; then
+                sudo tee /etc/wsl.conf > /dev/null << 'EOF'
+[boot]
+systemd=true
+
+[network]
+generateResolvConf = false
+
+[interop]
+appendWindowsPath = false
+EOF
+            else
+                # Append interop section if not exists
+                if ! sudo grep -q "\[interop\]" /etc/wsl.conf; then
+                    echo "" | sudo tee -a /etc/wsl.conf > /dev/null
+                    echo "[interop]" | sudo tee -a /etc/wsl.conf > /dev/null
+                    echo "appendWindowsPath = false" | sudo tee -a /etc/wsl.conf > /dev/null
+                fi
+            fi
+
+            echo "✅ WSL isolation configured!"
+            echo ""
+            echo "⚠️  REQUIRED: You must restart WSL for this to take effect:"
+            echo "   1. Exit this terminal (type 'exit')"
+            echo "   2. In Windows PowerShell/CMD, run: wsl --shutdown"
+            echo "   3. Start WSL again and re-run this script"
+            echo ""
+            echo "Press Enter to exit and restart WSL..."
+            read -r
+            exit 0
+        else
+            echo "⚠️  WARNING: Continuing WITHOUT isolation configuration"
+            echo "   Your environment may NOT be reproducible across machines!"
+            echo "   You can configure this later by editing /etc/wsl.conf"
+            echo ""
+        fi
+    else
+        echo "✅ WSL isolation already configured (appendWindowsPath = false)"
+    fi
+fi
+
 # Update package lists (minimal, just essentials)
 echo "📦 Updating package lists..."
 sudo apt-get update -qq

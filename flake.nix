@@ -42,8 +42,7 @@
 
               # Node.js for Claude CLI and other tools
               nodejs_22
-	      pnpm
- 
+              pnpm
 
               # Shell scripting
               shellcheck
