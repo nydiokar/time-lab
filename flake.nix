@@ -41,7 +41,9 @@
               git
 
               # Node.js for Claude CLI and other tools
-              nodejs_20
+              nodejs_22
+	      pnpm
+ 
 
               # Shell scripting
               shellcheck
